@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar · Kismet</title>
+<link rel="icon" href="img/radar.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/radar.css?v=2026-11-R1c">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".6"/><path d="M12 12 L19 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3 9.5a13 13 0 0 1 18 0M6 13a8.5 8.5 0 0 1 12 0M9 16.5a4 4 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="19.5" r="1.3" fill="currentColor"/></symbol>
+    <symbol id="i-devices" viewBox="0 0 24 24"><rect x="3" y="5" width="12" height="9" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 18h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="16.5" y="8" width="4.5" height="11" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 20.5a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-antenna" viewBox="0 0 24 24"><path d="M12 10v11M8.5 21h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="8" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7.5 3.5a7 7 0 0 0 0 9M16.5 3.5a7 7 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4l16 16M9.9 6A10 10 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3 3.7M6.3 7.6A17 17 0 0 0 2.5 12s3.5 6.5 9.5 6.5a9 9 0 0 0 4-.9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.5-3.2 8.2-7.5 9.5-4.3-1.3-7.5-5-7.5-9.5V6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 6.8-1.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5l9.5 16.5h-19z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17.3" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5.5" width="3.8" height="13" rx="1" fill="currentColor"/><rect x="13.7" y="5.5" width="3.8" height="13" rx="1" fill="currentColor"/></symbol>
+    <symbol id="i-bt" viewBox="0 0 24 24"><path d="M7 7.5l10 9-5 4.5V3l5 4.5-10 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15 15l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="#overzicht"><svg><use href="#i-radar"/></svg><span>Radar</span></a>
+    <nav class="nav" id="nav">
+      <a href="#overzicht" data-tab="overzicht"><svg><use href="#i-grid"/></svg>Overzicht</a>
+      <a href="#netwerken" data-tab="netwerken"><svg><use href="#i-wifi"/></svg>Netwerken<b data-count="aps"></b></a>
+      <a href="#apparaten" data-tab="apparaten"><svg><use href="#i-devices"/></svg>Apparaten<b data-count="devices"></b></a>
+      <a href="#alerts" data-tab="alerts"><svg><use href="#i-bell"/></svg>Alerts<b data-count="alerts"></b></a>
+      <a href="#bronnen" data-tab="bronnen"><svg><use href="#i-antenna"/></svg>Bronnen</a>
+    </nav>
+    <div class="side-foot">
+      <a href="/" class="muted-link">Klassieke Kismet-UI ↗</a>
+      <span id="version" class="tiny"></span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <div>
+        <h1 id="page-title">Overzicht</h1>
+        <p id="page-sub" class="sub">Wat je radio nu om je heen ziet.</p>
+      </div>
+      <div class="top-actions">
+        <span class="live" id="live"><i></i><span id="live-text">Verbinden…</span></span>
+        <button class="btn ghost" id="privacy" type="button" aria-pressed="false" title="Maskeer MAC-adressen en SSID's (voor screenshots)">
+          <svg><use href="#i-eye"/></svg><span>Privacy uit</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="banner" class="banner" hidden></div>
+
+    <!-- OVERZICHT -->
+    <section class="tab" id="tab-overzicht">
+      <div class="kpis" id="kpis"></div>
+
+      <div class="grid">
+        <article class="panel span-2">
+          <header><h2>Pakketten per seconde</h2><span class="hint" id="pps-now"></span></header>
+          <div class="chart" id="chart-pps"></div>
+        </article>
+
+        <article class="panel">
+          <header><h2>Beveiliging van netwerken</h2><span class="hint" id="sec-total"></span></header>
+          <div id="chart-sec"></div>
+          <p class="note">WPA3 en PMF beschermen tegen deauth-aanvallen. Open en WEP zijn af te luisteren.</p>
+        </article>
+
+        <article class="panel span-2">
+          <header><h2>Netwerken per kanaal</h2>
+            <div class="seg" id="band-seg" role="tablist">
+              <button type="button" data-band="24" class="on">2,4 GHz</button><button type="button" data-band="5">5 GHz</button><button type="button" data-band="6">6 GHz</button>
+            </div>
+          </header>
+          <div class="chart" id="chart-chan"></div>
+        </article>
+
+        <article class="panel">
+          <header><h2>Top-fabrikanten</h2><span class="hint">alle apparaten</span></header>
+          <div id="chart-manuf"></div>
+        </article>
+
+        <article class="panel span-2">
+          <header><h2>Laatste alerts</h2><a href="#alerts" class="muted-link">Alles →</a></header>
+          <ol class="alerts compact" id="alerts-mini"></ol>
+        </article>
+
+        <article class="panel">
+          <header><h2>Bronnen</h2><a href="#bronnen" class="muted-link">Beheren →</a></header>
+          <ul class="sources compact" id="sources-mini"></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- NETWERKEN -->
+    <section class="tab" id="tab-netwerken" hidden>
+      <div class="toolbar">
+        <label class="search"><svg><use href="#i-search"/></svg><input id="q-aps" type="search" placeholder="Zoek op SSID, BSSID of fabrikant"></label>
+        <div class="chips" id="sec-filter"></div>
+      </div>
+      <div class="table-wrap"><table class="table" id="t-aps"></table></div>
+    </section>
+
+    <!-- APPARATEN -->
+    <section class="tab" id="tab-apparaten" hidden>
+      <div class="toolbar">
+        <label class="search"><svg><use href="#i-search"/></svg><input id="q-dev" type="search" placeholder="Zoek op MAC, naam of fabrikant"></label>
+        <div class="chips" id="type-filter"></div>
+      </div>
+      <div class="table-wrap"><table class="table" id="t-dev"></table></div>
+    </section>
+
+    <!-- ALERTS -->
+    <section class="tab" id="tab-alerts" hidden>
+      <ol class="alerts" id="alerts-full"></ol>
+    </section>
+
+    <!-- BRONNEN -->
+    <section class="tab" id="tab-bronnen" hidden>
+      <div class="grid">
+        <article class="panel span-2">
+          <header><h2>Actieve bronnen</h2></header>
+          <ul class="sources" id="sources-full"></ul>
+        </article>
+        <article class="panel">
+          <header><h2>Beschikbare interfaces</h2></header>
+          <ul class="ifaces" id="ifaces"></ul>
+          <p class="note">Op macOS vangt <code>en0</code> (interne wifi) via CoreWLAN. Daarvoor moet <code>kismet_cap_osx_corewlan_wifi</code> setuid-root zijn.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</div>
+
+<dialog id="login" class="login">
+  <form method="dialog" id="login-form">
+    <svg class="login-mark"><use href="#i-radar"/></svg>
+    <h2>Inloggen bij Kismet</h2>
+    <p class="sub">Gebruik de gegevens uit <code>~/.kismet/kismet_httpd.conf</code>.</p>
+    <label>Gebruiker<input name="u" autocomplete="username" required></label>
+    <label>Wachtwoord<input name="p" type="password" autocomplete="current-password" required></label>
+    <p class="err" id="login-err" hidden>Onjuiste gebruiker of wachtwoord.</p>
+    <button class="btn" type="submit">Inloggen</button>
+  </form>
+</dialog>
+
+<div class="tip" id="tip" role="tooltip" hidden></div>
+<script type="module" src="js/radar.js?v=2026-11-R1c"></script>
+</body>
+</html>
