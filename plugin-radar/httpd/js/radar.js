@@ -617,6 +617,7 @@ async function poll(force) {
   try {
     const jobs = [loadFast()];
     if (force || S.tick % 2 === 0 || S.tab === 'apparaten' || S.tab === 'netwerken') jobs.push(loadDevices());
+    if (force && S.tab === 'bronnen') jobs.push(loadIfaces());
     await Promise.all(jobs);
     S.tick++;
     setLive(true, `Live · ${new Date(S.now * 1000).toLocaleTimeString('nl-NL')}`);
