@@ -55,7 +55,8 @@ source=hci0:name=Bluetooth
 $WIFI_SRC
 EOF
 if [ ! -f "$H/.kismet/kismet_httpd.conf" ]; then
-  PW=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 20)
+  # Eindige pijp (geen SIGPIPE), anders breekt 'set -o pipefail' het script af.
+  PW=$(head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n' | cut -c1-24)
   printf 'httpd_username=sam\nhttpd_password=%s\n' "$PW" > "$H/.kismet/kismet_httpd.conf"
   chown "$U:$U" "$H/.kismet/kismet_httpd.conf"; chmod 600 "$H/.kismet/kismet_httpd.conf"
 fi
