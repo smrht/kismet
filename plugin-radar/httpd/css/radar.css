@@ -96,6 +96,8 @@ a { color: inherit; }
   background: rgba(250,178,25,.08); border: 1px solid rgba(250,178,25,.28); color: var(--text-secondary);
 }
 .banner svg { color: var(--warning); }
+.banner.info { background: rgba(57,135,229,.08); border-color: rgba(57,135,229,.3); }
+.banner.info svg { color: var(--series-1); }
 .banner strong { color: var(--text-primary); }
 
 /* ---------- KPI-band ---------- */

@@ -505,8 +505,19 @@ function renderDevices() {
 }
 
 // ---------------------------------------------------------------- banner, live, render
+const srcType = (s) => s['kismet.datasource.type_driver']?.['kismet.datasource.driver.type'] || '';
 function renderBanner() {
   const b = $('#banner');
+  const replays = S.sources.filter((s) => srcType(s) === 'kismetdb');
+  if (replays.length && !S.sources.some((s) => srcType(s) !== 'kismetdb')) {
+    const names = replays.map((s) => s['kismet.datasource.name']).sort();
+    const last = (names[names.length - 1] || '').replace(/^ronde-(\d{4})(\d{2})(\d{2})-(\d{2})(\d{2}).*/, '$3-$2 $4:$5');
+    b.hidden = false;
+    b.className = 'banner info';
+    b.innerHTML = `<svg><use href="#i-radar"/></svg><span><strong>Scanronde-modus.</strong> Je ziet ${replays.length} opname${replays.length > 1 ? 's' : ''} van de M1, de laatste gestart om ${esc(last)}. Tijdens een nieuwe ronde (10 min) is deze pagina even niet bereikbaar.</span>`;
+    return;
+  }
+  b.className = 'banner';
   const running = S.sources.some((s) => s['kismet.datasource.running'] && !s['kismet.datasource.error']);
   const err = S.sources.find((s) => s['kismet.datasource.error']);
   if (err) {
