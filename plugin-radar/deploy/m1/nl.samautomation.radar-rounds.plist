@@ -9,6 +9,7 @@
     <string>/Users/home/kismet-lab/radar-rounds.sh</string>
     <string>loop</string>
   </array>
+  <key>LimitLoadToSessionType</key><string>Background</string>
   <key>RunAtLoad</key><true/>
   <key>KeepAlive</key><true/>
   <key>StandardOutPath</key><string>/Users/home/kismet-lab/logs/launchd.log</string>

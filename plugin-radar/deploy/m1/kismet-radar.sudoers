@@ -1,0 +1,4 @@
+# Kismet Radar-scanrondes op de M1: alleen deze drie handelingen zonder wachtwoord.
+home ALL=(root) NOPASSWD: /usr/bin/killall kismet_cap_osx_corewlan_wifi
+home ALL=(root) NOPASSWD: /usr/sbin/networksetup -setairportpower en0 off, /usr/sbin/networksetup -setairportpower en0 on
+home ALL=(root) NOPASSWD: /usr/sbin/networksetup -setairportnetwork en0 DECO
