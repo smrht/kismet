@@ -60,7 +60,7 @@ view() {
   done < <(ls -1t "$ROUNDS"/*.kismet 2>/dev/null | head -n "$KEEP_ROUNDS")
   printf 'httpd_bind_address=%s\n' "$ip" > "$LAB/view.conf"
   log "viewer op http://$ip:2501/plugin/radar/index.html met $n opname(s)"
-  kismet --no-line-wrap --override "$LAB/view.conf" -n "${srcs[@]}" \
+  kismet --no-line-wrap --override "$LAB/view.conf" -n ${srcs[@]+"${srcs[@]}"} \
     >> "$LAB/logs/kismet-view.log" 2>&1 < /dev/null &
 }
 
