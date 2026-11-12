@@ -398,7 +398,9 @@ function renderSources(el, compact) {
     const ch = s['kismet.datasource.hopping'] ? `hopt ${s['kismet.datasource.hop_rate'] || ''}/s` : `kanaal ${s['kismet.datasource.channel'] || '—'}`;
     const err = s['kismet.datasource.error'] ? ` · ${s['kismet.datasource.error_reason'] || ''}` : '';
     const uuid = s['kismet.datasource.uuid'];
-    const act = compact ? '' : (s['kismet.datasource.paused']
+    const act = compact ? '' : s['kismet.datasource.error']
+      ? '<span class="src-meta" style="white-space:normal;max-width:180px;text-align:right">Verdwijnt na herstart van Kismet</span>'
+      : (s['kismet.datasource.paused']
       ? `<button class="btn ghost small" data-src="resume" data-uuid="${esc(uuid)}"><svg><use href="#i-play"/></svg>Hervat</button>`
       : `<button class="btn ghost small" data-src="pause" data-uuid="${esc(uuid)}"><svg><use href="#i-pause"/></svg>Pauzeer</button>`);
     return `<li><span class="dot" style="background:${TONE_COLOR[tone]}"></span>
@@ -414,10 +416,23 @@ function renderIfaces() {
     const name = i['kismet.datasource.probed.interface'];
     const hw = i['kismet.datasource.probed.hardware'] || i['kismet.datasource.type_driver']?.['kismet.datasource.driver.type'] || '';
     const used = i['kismet.datasource.probed.in_use_uuid'] && !/^0{8}-/.test(i['kismet.datasource.probed.in_use_uuid']);
-    return `<li><svg style="color:var(--text-muted)"><use href="#i-antenna"/></svg><div class="src-main"><div class="src-name">${esc(name)}</div><div class="src-meta">${esc(hw)}</div></div>
-      ${used ? '<span class="badge b-good">In gebruik</span>' : `<button class="btn small" data-add="${esc(name)}"><svg><use href="#i-play"/></svg>Start</button>`}</li>`;
+    const unsupported = UNSUPPORTED_HW[hw];
+    const action = used ? '<span class="badge b-good">In gebruik</span>'
+      : unsupported ? `<span class="badge b-neutral" data-tip="${esc(unsupported)}">Niet geschikt</span>`
+      : `<button class="btn small" data-add="${esc(name)}"><svg><use href="#i-play"/></svg>Start</button>`;
+    return `<li><svg style="color:var(--text-muted)"><use href="#i-antenna"/></svg><div class="src-main"><div class="src-name">${esc(name)}</div><div class="src-meta">${esc(hw)}</div></div>${action}</li>`;
   }).join('');
+  const hws = S.ifaces.map((i) => i['kismet.datasource.probed.hardware']);
+  const notes = [];
+  if (hws.includes('brcmfmac')) notes.push('De interne wifi van een Raspberry Pi (Broadcom, <code>brcmfmac</code>) kan niet meeluisteren zonder nexmon-patch. Sluit een USB-adapter met een MT7612U- of MT7921AU-chip aan; die verschijnt hier vanzelf.');
+  if (hws.includes('osxcorewlan')) notes.push('Op macOS vangt <code>en0</code> via CoreWLAN, maar je Mac verliest dan zijn wifi-verbinding zolang de bron draait.');
+  if (S.ifaces.some((i) => /hci|bluetooth/i.test(i['kismet.datasource.probed.hardware'] || ''))) notes.push('Bluetooth (<code>hci</code>) ziet telefoons, oordopjes, horloges en trackers in de buurt.');
+  $('#iface-note').innerHTML = notes.join('<br><br>');
 }
+// Hardware die Kismet wel ziet maar niet in monitor mode krijgt (zonder extra patches).
+const UNSUPPORTED_HW = {
+  brcmfmac: 'Broadcom-chip van de Raspberry Pi: monitor mode alleen met nexmon-patch. Gebruik een USB-adapter (MT7612U/MT7921AU).',
+};
 
 // ---------- tabellen
 function sortRows(rows, sort, getters) {
