@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Radar · Kismet</title>
 <link rel="icon" href="img/radar.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/radar.css?v=2026-11-R1c">
+<link rel="stylesheet" href="css/radar.css?v=2026-11-R1d">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -137,7 +137,7 @@
         <article class="panel">
           <header><h2>Beschikbare interfaces</h2></header>
           <ul class="ifaces" id="ifaces"></ul>
-          <p class="note">Op macOS vangt <code>en0</code> (interne wifi) via CoreWLAN. Daarvoor moet <code>kismet_cap_osx_corewlan_wifi</code> setuid-root zijn.</p>
+          <p class="note" id="iface-note"></p>
         </article>
       </div>
     </section>
@@ -157,6 +157,6 @@
 </dialog>
 
 <div class="tip" id="tip" role="tooltip" hidden></div>
-<script type="module" src="js/radar.js?v=2026-11-R1c"></script>
+<script type="module" src="js/radar.js?v=2026-11-R1d"></script>
 </body>
 </html>
